@@ -38,8 +38,10 @@ function getRoomData(room) {
     roomData.controller = controllerData;
   }
 
-  const hostileCreepsData = room.find(FIND_HOSTILE_CREEPS).map(getHostileCreepData);
-  roomData.hostileCreeps = hostileCreepsData;
+  roomData.hostileCreeps =
+    room
+      .find(FIND_HOSTILE_CREEPS)
+      .map(creep => creep.id);
 
   return roomData;
 }

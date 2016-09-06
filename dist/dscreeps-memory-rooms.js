@@ -5,26 +5,8 @@ Game.Memory.dscreeps = Game.Memory.dscreeps || {};
 module.exports = () => {
   const memory = Game.Memory.dscreeps;
 
-  updateTicksToLive(memory);
   updateRoomsData(memory);
 };
-
-/*
- * const hostileCreepData = {
- *   id: 'id',
- *   owner: undefined || { username: 'username' },
- *   ticksToLive: 0
- * };
- */
-
-function getHostileCreepData(creep) {
-  const hostileCreepData = {
-    id: creep.id,
-    owner: { username: creep.owner.username },
-    ticksToLive: creep.ticksToLive
-  };
-  return hostileCreepData;
-}
 
 /*
  * const roomData = {
@@ -66,8 +48,10 @@ function getRoomData(room) {
     roomData.controller = controllerData;
   }
 
-  const hostileCreepsData = room.find(FIND_HOSTILE_CREEPS).map(getHostileCreepData);
-  roomData.hostileCreeps = hostileCreepsData;
+  roomData.hostileCreeps =
+    room
+      .find(FIND_HOSTILE_CREEPS)
+      .map(creep => creep.id);
 
   return roomData;
 }
@@ -81,18 +65,4 @@ function updateRoomsData(memory) {
 
   memory.rooms = memory.rooms || {};
   Object.assign(memory.rooms, roomsData);
-}
-
-function updateTicksToLive(memory) {
-  _.each(memory.rooms, roomData => {
-    if (Game.rooms[roomData.name]) {
-      return;
-    }
-
-    _.each(roomData.hostileCreeps, creepData => {
-      --creepData.ticksToLive;
-    });
-
-    roomData.hostileCreeps = _.filter(roomData.hostileCreeps, creepData => creepData.ticksToLive);
-  });
 }
