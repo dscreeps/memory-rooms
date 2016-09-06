@@ -1,0 +1,10 @@
+{
+  "name": "dscreeps-memory-rooms",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "dscreeps-grunt": "^1.0.0",
+    "grunt": "^1.0.1",
+    "grunt-contrib-concat": "^1.0.1"
+  }
+}
